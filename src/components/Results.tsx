@@ -2,6 +2,7 @@ import moment from 'moment-timezone';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { AppState } from '../store';
+import { getTimezoneString } from '../hooks/utils';
 
 export const Results = () => {
 	const currentTimezone = useSelector((state: AppState) => state.timezone.selectedTimezone);
@@ -11,9 +12,11 @@ export const Results = () => {
 	const [formattedTime2, setFormattedTime2] = useState('');
 	const [hoursAhead, setHoursAhead] = useState(0);
 
-	function getTimezoneString(tz: any) {
-		return `(${tz.abbreviation}) ${tz.alternativeName} - ${tz.countryName}`;
-	}
+	const converter = new Intl.NumberFormat('en-US', {
+		style: 'unit',
+		unit: 'hour',
+		unitDisplay: 'long',
+	});
 
 	useEffect(() => {
 		if (!currentTimezone || !alternateTimezone) return;
@@ -22,14 +25,14 @@ export const Results = () => {
 		// CHECKME: Check for recurrence
 		const interval = setInterval(() => {
 			// Get current time (formatted)
-			setFormattedTime(() => moment.tz(Date.now(), currentTimezone.name).format('hh:mm:ss A'));
-			setFormattedTime2(() => moment.tz(Date.now(), alternateTimezone.name).format('hh:mm:ss A'));
+			setFormattedTime(() => moment.tz(Date.now(), currentTimezone.name).format('hh:mm A'));
+			setFormattedTime2(() => moment.tz(Date.now(), alternateTimezone.name).format('hh:mm A'));
 		}, 1000);
 
 		// Get hours ahead
 		const currentTime = new Date().toLocaleString('en-US', { timeZone: currentTimezone.name });
 		const alternateTime = new Date().toLocaleString('en-US', { timeZone: alternateTimezone.name });
-		const hoursBetween = Math.abs(new Date(alternateTime).getTime() - new Date(currentTime).getTime()) / 36e5;
+		const hoursBetween = Math.round(new Date(alternateTime).getTime() - new Date(currentTime).getTime()) / 36e5;
 		setHoursAhead(hoursBetween);
 
 		return () => {
@@ -39,30 +42,32 @@ export const Results = () => {
 
 	return (
 		<>
-			{currentTimezone && alternateTimezone ? (
-				<div>
-					<div>
+			{currentTimezone && alternateTimezone && (
+				<div className="mt-8 text-center">
+					<div className="flex gap-8 justify-center">
 						{/* Current Time */}
 						<div>
 							<h2>Time in {getTimezoneString(currentTimezone)}</h2>
-							<p>{formattedTime}</p>
+							<p className="text-3xl font-semibold">{formattedTime}</p>
 						</div>
 
 						{/* Converted Time */}
 						<div>
 							<h2>Time In {getTimezoneString(alternateTimezone)}</h2>
-							<p>{formattedTime2}</p>
+							<p className="text-3xl font-semibold">{formattedTime2}</p>
 						</div>
 					</div>
 
 					{/* Hours Ahead */}
-					<div>
-						<h2>Hours Ahead</h2>
-						<p>{hoursAhead}</p>
-					</div>
+					{currentTimezone.alternativeName !== alternateTimezone.alternativeName && (
+						<div className="mt-6">
+							<p className="italic">
+								{currentTimezone.alternativeName} is <b>{converter.format(Math.abs(hoursAhead))} </b>{' '}
+								{hoursAhead <= 0 ? 'ahead of' : 'behind'} {alternateTimezone.alternativeName}.
+							</p>
+						</div>
+					)}
 				</div>
-			) : (
-				<h1>Waiting for selection...</h1>
 			)}
 		</>
 	);
