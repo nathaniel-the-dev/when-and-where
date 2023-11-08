@@ -7,6 +7,16 @@
 		@apply inline-flex gap-2 items-center py-1.5 px-3 rounded cursor-pointer;
 	}
 	.btn.btn-primary {
-		@apply bg-blue-500 text-white;
+		@apply text-white bg-blue-500;
 	}
+}
+
+.mapboxgl-popup .mapboxgl-popup-content {
+	@apply px-4 pt-4 overflow-hidden text-center rounded-lg;
+}
+.mapboxgl-popup .mapboxgl-popup-close-button {
+	@apply lg:opacity-0 px-1 py-0 text-sm text-red-500 transition duration-150;
+}
+.mapboxgl-popup:hover .mapboxgl-popup-close-button {
+	@apply opacity-100;
 }

@@ -15,6 +15,6 @@
 
 ## Set 3
 
--   [ ] Not toggling between pins
+-   [ ] Popup not showing when you click on a pin
 -   [ ] Cleanup and optimization
 -   [ ] Styling

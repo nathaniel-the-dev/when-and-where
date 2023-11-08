@@ -17,16 +17,17 @@ export const Map = () => {
 	const markers = [
 		new mapboxgl.Marker({
 			draggable: true,
-			color: 'red',
 		}),
 		new mapboxgl.Marker({
 			draggable: true,
+			color: 'red',
 		}),
 	] as const;
-	let currentMarker = markers.length - 1;
+	let currentMarkerIndex = 0;
 
-	function onDragEnd(e: { type: string; target: mapboxgl.Marker }) {
-		getTimezoneFromMap(e.target.getLngLat());
+	async function onDragEnd(e: { type: string; target: mapboxgl.Marker }) {
+		await getTimezoneFromMap(e.target.getLngLat());
+		currentMarkerIndex = markers.indexOf(e.target);
 	}
 
 	async function getTimezoneFromMap(lngLat: { lng: number; lat: number }) {
@@ -38,7 +39,7 @@ export const Map = () => {
 			);
 			const data = await response.json();
 
-			const popup = markers[currentMarker].getPopup();
+			const popup = markers[currentMarkerIndex].getPopup();
 
 			const timezone = data.features[0]?.properties.TZID;
 
@@ -53,7 +54,7 @@ export const Map = () => {
 				if (selectedTimezone) {
 					dispatch(
 						setTimezone({
-							key: currentMarker === 0 ? 'selectedTimezone' : 'alternateTimezone',
+							key: currentMarkerIndex === 0 ? 'selectedTimezone' : 'alternateTimezone',
 							value: selectedTimezone.name,
 							fromSelect: false,
 						})
@@ -66,10 +67,18 @@ export const Map = () => {
 				popup.setText('Could not identify place :(');
 			}
 
-			markers[currentMarker].togglePopup();
+			if (!markers[currentMarkerIndex].getPopup().isOpen()) markers[currentMarkerIndex].togglePopup();
 		} catch (error) {
 			console.error(error);
 		}
+	}
+
+	function toggleCurrentMarkerIndex() {
+		currentMarkerIndex = (currentMarkerIndex + 1) % markers.length;
+	}
+
+	function showCurrentMarker(pos: mapboxgl.LngLatLike) {
+		markers[currentMarkerIndex].setLngLat(pos).addTo(map.current!);
 	}
 
 	useEffect(() => {
@@ -99,15 +108,19 @@ export const Map = () => {
 
 			// Add markers
 			markers.forEach((marker) => {
-				marker.on('dragend', onDragEnd as any);
 				marker.setPopup(new mapboxgl.Popup());
+				marker.on('dragend', onDragEnd as any);
+				marker.on('click', (e) => {
+					if (!marker.getPopup().isOpen()) marker.togglePopup();
+					console.log(e);
+				});
 			});
 		});
 
 		map.current.on('click', async (e) => {
-			markers[currentMarker].setLngLat(e.lngLat);
+			showCurrentMarker(e.lngLat);
 			await getTimezoneFromMap(e.lngLat);
-			currentMarker = (currentMarker + 1) % markers.length;
+			toggleCurrentMarkerIndex();
 		});
 
 		store.subscribe(async () => {
@@ -125,17 +138,20 @@ export const Map = () => {
 				const [result] = data.features;
 
 				if (result) {
-					markers[currentMarker].setLngLat(result.geometry.coordinates).addTo(map.current!);
-					markers[currentMarker].getPopup().setText(getTimezoneString(state[state.lastUpdated]));
-					markers[currentMarker].togglePopup();
-					currentMarker = (currentMarker + 1) % markers.length;
+					currentMarkerIndex = state.lastUpdated === 'selectedTimezone' ? 0 : 1;
+					const marker = markers[currentMarkerIndex];
+
+					showCurrentMarker(result.geometry.coordinates);
+					marker.getPopup().setText(getTimezoneString(state[state.lastUpdated]));
+					if (!marker.getPopup().isOpen()) marker.togglePopup();
+					toggleCurrentMarkerIndex();
 				}
 			}
 		});
 	}, []);
 
 	return (
-		<div className="relative rounded-lg overflow-hidden">
+		<div className="relative overflow-hidden rounded-lg">
 			<div ref={mapContainer} className="h-[25rem] w-full" />
 		</div>
 	);

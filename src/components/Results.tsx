@@ -44,7 +44,7 @@ export const Results = () => {
 		<>
 			{currentTimezone && alternateTimezone && (
 				<div className="mt-8 text-center">
-					<div className="flex gap-8 justify-center">
+					<div className="flex justify-center gap-8">
 						{/* Current Time */}
 						<div>
 							<h2>Time in {getTimezoneString(currentTimezone)}</h2>
@@ -59,11 +59,13 @@ export const Results = () => {
 					</div>
 
 					{/* Hours Ahead */}
-					{currentTimezone.alternativeName !== alternateTimezone.alternativeName && (
+					{hoursAhead !== 0 && (
 						<div className="mt-6">
 							<p className="italic">
-								{currentTimezone.alternativeName} is <b>{converter.format(Math.abs(hoursAhead))} </b>{' '}
-								{hoursAhead <= 0 ? 'ahead of' : 'behind'} {alternateTimezone.alternativeName}.
+								{`${currentTimezone.alternativeName} (${currentTimezone.countryName})`} is{' '}
+								<b>{converter.format(Math.abs(hoursAhead))} </b>{' '}
+								{hoursAhead <= 0 ? 'ahead of' : 'behind'}{' '}
+								{`${alternateTimezone.alternativeName} (${alternateTimezone.countryName})`}.
 							</p>
 						</div>
 					)}
