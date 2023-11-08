@@ -15,6 +15,10 @@
 
 ## Set 3
 
--   [ ] Popup not showing when you click on a pin
--   [ ] Cleanup and optimization
+-   [x] Popup not showing when you click on a pin
 -   [ ] Styling
+
+## Set 4
+
+-   [ ] Cleanup and optimization
+-   [ ] Publication
