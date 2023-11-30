@@ -6,7 +6,7 @@ export default {
 	theme: {
 		extend: {
 			fontFamily: {
-				sans: ['Inter', ...fontFamily.sans],
+				sans: ['Lato', ...fontFamily.sans],
 			},
 		},
 
@@ -14,10 +14,10 @@ export default {
 			center: true,
 			padding: {
 				DEFAULT: '1rem',
-				sm: '2rem',
-				lg: '4rem',
-				xl: '5rem',
-				'2xl': '6rem',
+				sm: '1rem',
+				lg: '2rem',
+				xl: '2.5rem',
+				'2xl': '4rem',
 			},
 		},
 	},

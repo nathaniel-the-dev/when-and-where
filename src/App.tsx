@@ -1,29 +1,29 @@
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Main from './components/Main';
 import { Form } from './components/Form';
 import { Results } from './components/Results';
+import { Map } from './components/Map';
+import { Provider } from 'react-redux';
+import store from './store';
 
 function App() {
 	return (
-		<main className="min-h-screen grid">
-			<header className="flex justify-center text-center py-6 bg-blue-500 text-white">
-				<h1 className="text-3xl font-bold">Timezone Converter</h1>
-			</header>
+		<>
+			<Provider store={store}>
+				<main className="app-layout text-white bg-gray-700">
+					<Header />
+					<Main>
+						<Form />
+						<Results />
+					</Main>
 
-			<section className="container py-12">
-				<div>
-					<Form />
-					<Results />
-				</div>
-			</section>
+					<Footer />
 
-			<footer className="flex justify-center text-center py-2 mt-auto">
-				<p className="text-sm text-gray-400">
-					Made with ❤️ by{' '}
-					<a href="https://github.com/Nathan1434" target="_blank" className="hover:underline">
-						Nathaniel Campbell
-					</a>
-				</p>
-			</footer>
-		</main>
+					<Map />
+				</main>
+			</Provider>
+		</>
 	);
 }
 

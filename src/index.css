@@ -4,11 +4,12 @@
 
 @layer components {
 	.btn {
-		@apply inline-flex gap-2 items-center py-1.5 px-3 rounded cursor-pointer;
+		@apply py-2.5 px-5 text-sm font-medium inline-flex items-center gap-2 text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200;
 	}
-	.btn.btn-primary {
-		@apply text-white bg-blue-500;
-	}
+}
+
+.mapboxgl-popup {
+	@apply text-black;
 }
 
 .mapboxgl-popup .mapboxgl-popup-content {
@@ -19,4 +20,39 @@
 }
 .mapboxgl-popup:hover .mapboxgl-popup-close-button {
 	@apply opacity-100;
+}
+
+.app-layout {
+	display: grid;
+	grid-template-areas:
+		'header'
+		'main'
+		'map'
+		'footer';
+
+	min-height: 100vh;
+}
+
+@media (min-width: 768px) {
+	.app-layout {
+		grid-template-areas:
+			'header map'
+			'main map'
+			'footer map';
+		grid-template-columns: minmax(auto, 30rem) 1fr;
+	}
+}
+
+@media (min-width: 768px) {
+	.main-section {
+		height: calc(100vh - 8rem);
+		overflow-y: auto;
+	}
+
+	.main-section::-webkit-scrollbar {
+		width: 0.5rem;
+	}
+	.main-section::-webkit-scrollbar-thumb {
+		@apply bg-gray-800;
+	}
 }

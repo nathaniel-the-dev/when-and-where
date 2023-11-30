@@ -2,9 +2,8 @@ import Select from 'react-select';
 import moment from 'moment-timezone';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTimezone } from '../store/timezone';
-import { Map } from './Map';
 import { AppState } from '../store';
-import { formatTZValue } from '../hooks/utils';
+import { formatTZValue } from '../utils';
 
 export const Form = () => {
 	const dispatch = useDispatch();
@@ -29,65 +28,66 @@ export const Form = () => {
 		};
 	}
 
-	function swap() {
-		dispatch(setTimezone({ key: 'selectedTimezone', value: alternate?.value, fromSelect: true }));
-		dispatch(setTimezone({ key: 'alternateTimezone', value: selected?.value, fromSelect: true }));
-	}
-
 	return (
-		<div>
-			<p className="mb-8 text-xl text-center">Pick a time zone to convert to!</p>
-
-			<Map />
-
-			<form className="max-w-3xl mx-auto mt-8">
-				<div className="flex items-end gap-6">
-					<div className="flex-1 mb-1">
-						<label htmlFor="timezone">Country or timezone</label>
+		<form className="max-w-3xl mx-auto my-8 mb-12">
+			<div className="flex flex-col items-center gap-4">
+				<div className="relative flex-1 w-full max-w-md mb-1">
+					<label className="inline-block mb-1 text-gray-200" htmlFor="timezone">
+						Country or timezone
+					</label>
+					<div className="flex items-center gap-2">
 						<Select
 							id="timezone"
+							className="w-full text-black"
 							placeholder="Search by country or timezone"
 							options={timezones}
 							onChange={handleInput('selectedTimezone')}
 							value={selected}
 							required
 						/>
-					</div>
-
-					<button
-						type="button"
-						title="Swap"
-						onClick={swap}
-						className="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							className="w-6 h-6"
+						<button
+							className="btn py-1.5 px-3 text-blue-500 bg-white rounded"
+							onClick={selectMyTZ}
+							type="button"
+							title="Use my location"
 						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"
-							/>
-						</svg>
-					</button>
-
-					<div className="flex-1 mb-1">
-						<label htmlFor="alternateTimezone">Other country or timezone</label>
-						<Select
-							id="alternateTimezone"
-							options={timezones.filter((tz: any) => tz.value !== selected?.label)}
-							onChange={handleInput('alternateTimezone')}
-							value={alternate}
-							required
-						/>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								strokeWidth={1.5}
+								stroke="currentColor"
+								className="w-6 h-6"
+							>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
+								/>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
+								/>
+							</svg>
+						</button>
 					</div>
 				</div>
-			</form>
-		</div>
+
+				<div className="flex-1 w-full max-w-md mb-1">
+					<label className="inline-block mb-1 text-gray-200" htmlFor="alternateTimezone">
+						Other country or timezone
+					</label>
+					<Select
+						id="alternateTimezone"
+						className="w-full text-black"
+						options={timezones.filter((tz: any) => tz.value !== selected?.label)}
+						onChange={handleInput('alternateTimezone')}
+						value={alternate}
+						required
+					/>
+				</div>
+			</div>
+		</form>
 	);
 };

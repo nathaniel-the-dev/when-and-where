@@ -16,9 +16,10 @@
 ## Set 3
 
 -   [x] Popup not showing when you click on a pin
--   [ ] Styling
+-   [x] Styling
 
 ## Set 4
 
 -   [ ] Cleanup and optimization
+-   [ ] Accessibility and SEO (see index.html)
 -   [ ] Publication
