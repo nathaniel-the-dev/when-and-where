@@ -17,7 +17,6 @@ function App() {
 						<Form />
 						<Results />
 					</Main>
-
 					<Footer />
 
 					<Map />

@@ -1,22 +1,11 @@
 import Select from 'react-select';
-import moment from 'moment-timezone';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setTimezone } from '../store/timezone';
-import { AppState } from '../store';
-import { formatTZValue } from '../utils';
+import { useTimezones } from '../hooks/useTimezones';
 
 export const Form = () => {
+	const { timezonesFormatted, currentTimezone, selected, alternate } = useTimezones();
 	const dispatch = useDispatch();
-
-	const timezones = useSelector((state: AppState) => state.timezone.timezones).map(formatTZValue);
-	const selected = useSelector(
-		(state: AppState) => state.timezone.selectedTimezone && formatTZValue(state.timezone.selectedTimezone)
-	);
-	const alternate = useSelector(
-		(state: AppState) => state.timezone.alternateTimezone && formatTZValue(state.timezone.alternateTimezone)
-	);
-
-	const currentTimezone = timezones.find((tz: any) => tz.value === moment.tz.guess());
 
 	function selectMyTZ() {
 		dispatch(setTimezone({ key: 'selectedTimezone', value: currentTimezone!.value, fromSelect: true }));
@@ -32,15 +21,15 @@ export const Form = () => {
 		<form className="max-w-3xl mx-auto my-8 mb-12">
 			<div className="flex flex-col items-center gap-4">
 				<div className="relative flex-1 w-full max-w-md mb-1">
-					<label className="inline-block mb-1 text-gray-200" htmlFor="timezone">
+					<label className="inline-block mb-1 text-gray-200" htmlFor="selectedTimezone">
 						Country or timezone
 					</label>
 					<div className="flex items-center gap-2">
 						<Select
-							id="timezone"
+							id="selectedTimezone"
 							className="w-full text-black"
 							placeholder="Search by country or timezone"
-							options={timezones}
+							options={timezonesFormatted}
 							onChange={handleInput('selectedTimezone')}
 							value={selected}
 							required
@@ -81,7 +70,7 @@ export const Form = () => {
 					<Select
 						id="alternateTimezone"
 						className="w-full text-black"
-						options={timezones.filter((tz: any) => tz.value !== selected?.label)}
+						options={timezonesFormatted.filter((tz: any) => tz.value !== selected?.label)}
 						onChange={handleInput('alternateTimezone')}
 						value={alternate}
 						required

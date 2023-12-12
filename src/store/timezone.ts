@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { rawTimeZones, type RawTimeZone } from '@vvo/tzdb';
+import { formatTZValue } from '../utils';
+import { AppState } from '.';
 
 const timezoneSlice = createSlice({
 	name: 'timezone',
@@ -25,5 +27,11 @@ const timezoneSlice = createSlice({
 });
 
 export const { setTimezone } = timezoneSlice.actions;
+
+export const getTimezones = (state: AppState) => state.timezone.timezones;
+export const getSelectedTimezone = (state: AppState) => state.timezone.selectedTimezone;
+
+export const getTimezoneFormatted = (key: 'selectedTimezone' | 'alternateTimezone') => (state: AppState) =>
+	state.timezone[key] && formatTZValue(state.timezone[key]);
 
 export default timezoneSlice;

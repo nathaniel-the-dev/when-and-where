@@ -4,13 +4,14 @@ import { useDispatch, useStore } from 'react-redux';
 import { setTimezone } from '../store/timezone';
 import { AppState } from '../store';
 import { getTimezoneString } from '../utils';
+import { useTimezones } from '../hooks/useTimezones';
 
 export const Map = () => {
 	const store = useStore<AppState>();
 	const [error, setError] = useState('');
 	const dispatch = useDispatch();
 
-	const timezones = store.getState().timezone.timezones;
+	const { timezones } = useTimezones();
 
 	const mapContainer = useRef(null);
 	const map = useRef<mapboxgl.Map | null>(null);
@@ -24,7 +25,7 @@ export const Map = () => {
 			color: 'red',
 		}),
 	] as const;
-	let currentMarkerIndex = 0;
+	let currentMarkerIndex = useRef(0);
 
 	useEffect(() => {
 		if (!mapContainer.current || map.current) return;
@@ -80,8 +81,8 @@ export const Map = () => {
 				const [result] = data.features;
 
 				if (result) {
-					currentMarkerIndex = state.lastUpdated === 'selectedTimezone' ? 0 : 1;
-					const marker = markers[currentMarkerIndex];
+					currentMarkerIndex.current = state.lastUpdated === 'selectedTimezone' ? 0 : 1;
+					const marker = markers[currentMarkerIndex.current];
 
 					showCurrentMarker(result.geometry.coordinates);
 					marker.getPopup().setText(getTimezoneString(state[state.lastUpdated]));
@@ -93,8 +94,8 @@ export const Map = () => {
 	}, []);
 
 	async function onDragEnd(e: { type: string; target: mapboxgl.Marker }) {
+		currentMarkerIndex.current = markers.indexOf(e.target);
 		await getTimezoneFromMap(e.target.getLngLat());
-		// currentMarkerIndex = markers.indexOf(e.target);
 	}
 
 	async function getTimezoneFromMap(lngLat: { lng: number; lat: number }) {
@@ -106,7 +107,7 @@ export const Map = () => {
 			);
 			const data = await response.json();
 
-			const popup = markers[currentMarkerIndex].getPopup();
+			const popup = markers[currentMarkerIndex.current].getPopup();
 
 			const timezone = data.features[0]?.properties.TZID;
 
@@ -121,7 +122,7 @@ export const Map = () => {
 				if (selectedTimezone) {
 					dispatch(
 						setTimezone({
-							key: currentMarkerIndex === 0 ? 'selectedTimezone' : 'alternateTimezone',
+							key: currentMarkerIndex.current === 0 ? 'selectedTimezone' : 'alternateTimezone',
 							value: selectedTimezone.name,
 							fromSelect: false,
 						})
@@ -134,18 +135,19 @@ export const Map = () => {
 				popup.setText('Could not identify place :(');
 			}
 
-			if (!markers[currentMarkerIndex].getPopup().isOpen()) markers[currentMarkerIndex].togglePopup();
+			if (!markers[currentMarkerIndex.current].getPopup().isOpen())
+				markers[currentMarkerIndex.current].togglePopup();
 		} catch (error) {
 			console.error(error);
 		}
 	}
 
 	function toggleCurrentMarkerIndex() {
-		currentMarkerIndex = (currentMarkerIndex + 1) % markers.length;
+		currentMarkerIndex.current = (currentMarkerIndex.current + 1) % markers.length;
 	}
 
 	function showCurrentMarker(pos: mapboxgl.LngLatLike) {
-		markers[currentMarkerIndex].setLngLat(pos).addTo(map.current!);
+		markers[currentMarkerIndex.current].setLngLat(pos).addTo(map.current!);
 	}
 
 	return (

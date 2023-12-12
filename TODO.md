@@ -20,6 +20,11 @@
 
 ## Set 4
 
--   [ ] Cleanup and optimization
+-   [x] Cleanup and optimization
+-   [x] Publication
+
+## Set 5
+
 -   [ ] Accessibility and SEO (see index.html)
--   [ ] Publication
+-   [ ] Maintenance
+-   [ ] Logo
