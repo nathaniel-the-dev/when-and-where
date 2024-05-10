@@ -71,11 +71,7 @@ export const Map = () => {
 
 			if (state.setFromSelect) {
 				const country = state[state.lastUpdated]?.countryName;
-				const res = await fetch(
-					`https://api.mapbox.com/geocoding/v5/mapbox.places/${country}.json?access_token=${
-						import.meta.env.VITE_MAPBOX_API_KEY
-					}&types=country`
-				);
+				const res = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${country}.json?access_token=${import.meta.env.VITE_MAPBOX_API_KEY}&types=country`);
 				const data = await res.json();
 
 				const [result] = data.features;
@@ -101,9 +97,7 @@ export const Map = () => {
 	async function getTimezoneFromMap(lngLat: { lng: number; lat: number }) {
 		try {
 			const response = await fetch(
-				`https://api.mapbox.com/v4/examples.4ze9z6tv/tilequery/${lngLat.lng},${lngLat.lat}.json?access_token=${
-					import.meta.env.VITE_MAPBOX_API_KEY
-				}`
+				`https://api.mapbox.com/v4/examples.4ze9z6tv/tilequery/${lngLat.lng},${lngLat.lat}.json?access_token=${import.meta.env.VITE_MAPBOX_API_KEY}`
 			);
 			const data = await response.json();
 
@@ -112,12 +106,7 @@ export const Map = () => {
 			const timezone = data.features[0]?.properties.TZID;
 
 			if (timezone) {
-				const selectedTimezone = timezones.find(
-					(tz: any) =>
-						tz.name === timezone ||
-						tz.group.includes(timezone) ||
-						tz.mainCities.includes(timezone.split('/')[1])
-				);
+				const selectedTimezone = timezones.find((tz: any) => tz.name === timezone || tz.group.includes(timezone) || tz.mainCities.includes(timezone.split('/')[1]));
 
 				if (selectedTimezone) {
 					dispatch(
@@ -135,8 +124,7 @@ export const Map = () => {
 				popup.setText('Could not identify place :(');
 			}
 
-			if (!markers[currentMarkerIndex.current].getPopup().isOpen())
-				markers[currentMarkerIndex.current].togglePopup();
+			if (!markers[currentMarkerIndex.current].getPopup().isOpen()) markers[currentMarkerIndex.current].togglePopup();
 		} catch (error) {
 			console.error(error);
 		}
