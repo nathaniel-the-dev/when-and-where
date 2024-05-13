@@ -15,11 +15,8 @@ The app offers the following features:
 To run the app locally, you will need to install the following dependencies:
 
 ```bash
-cp .env.example .env
-```
-
-```bash
 npm install
+cp .env.example .env
 ```
 
 ## Contribution
