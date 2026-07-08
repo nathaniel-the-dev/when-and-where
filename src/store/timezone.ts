@@ -23,15 +23,23 @@ const timezoneSlice = createSlice({
 			state.setFromSelect = action.payload.fromSelect || false;
 			state.lastUpdated = action.payload.key;
 		},
+		swapTimezones(state) {
+			const temp = state.selectedTimezone;
+			state.selectedTimezone = state.alternateTimezone;
+			state.alternateTimezone = temp;
+			state.setFromSelect = false;
+		},
 	},
 });
 
-export const { setTimezone } = timezoneSlice.actions;
+export const { setTimezone, swapTimezones } = timezoneSlice.actions;
 
 export const getTimezones = (state: AppState) => state.timezone.timezones;
 export const getSelectedTimezone = (state: AppState) => state.timezone.selectedTimezone;
 
-export const getTimezoneFormatted = (key: 'selectedTimezone' | 'alternateTimezone') => (state: AppState) =>
-	state.timezone[key] && formatTZValue(state.timezone[key]);
+export const getTimezoneFormatted = (key: 'selectedTimezone' | 'alternateTimezone') => (state: AppState) => {
+	const tz = state.timezone[key];
+	return tz ? formatTZValue(tz) : undefined;
+};
 
 export default timezoneSlice;
