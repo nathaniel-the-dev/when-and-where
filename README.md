@@ -2,7 +2,9 @@
 
 A real-time, dual-timezone converter with an interactive world map. Select any two timezones and see the current time, offset, and geographic location — all in one place.
 
-![Preview](https://img.shields.io/badge/status-active-brightgreen)
+![When & Where — Timezone Converter](public/og-image.png)
+
+![Status](https://img.shields.io/badge/status-active-brightgreen)
 ![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-06B6D4?logo=tailwindcss)
