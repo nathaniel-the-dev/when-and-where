@@ -1,8 +1,8 @@
-# When & Where — Timezone Converter
+# When and Where — Timezone Converter
 
 A real-time, dual-timezone converter with an interactive world map. Select any two timezones and see the current time, offset, and geographic location — all in one place.
 
-![When & Where — Timezone Converter](public/og-image.png)
+![When and Where — Timezone Converter](public/og-image.png)
 
 ![Status](https://img.shields.io/badge/status-active-brightgreen)
 ![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)
