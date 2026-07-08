@@ -2,8 +2,11 @@ const Header = () => {
 	return (
 		<header className="[grid-area:header] bg-gradient-to-r from-indigo-600/90 via-indigo-500/90 to-violet-600/90 backdrop-blur-sm border-b border-white/10">
 			<div className="flex items-center justify-center gap-3 px-6 py-5">
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7 text-white/80" aria-hidden="true">
-					<path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 000-1.5h-3.75V6z" clipRule="evenodd" />
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" className="w-7 h-7" aria-hidden="true">
+					<circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" className="text-white/70" />
+					<line x1="12" y1="12" x2="12" y2="7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="text-indigo-200" />
+					<line x1="12" y1="12" x2="16" y2="14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="text-indigo-300" />
+					<circle cx="12" cy="12" r="1" fill="currentColor" className="text-white/80" />
 				</svg>
 				<div>
 					<h1 className="text-xl font-black tracking-tight sm:text-2xl">When and Where</h1>
