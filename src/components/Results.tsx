@@ -7,7 +7,7 @@ export const Results = () => {
 	return (
 		<>
 			{formattedTime && formattedTime2 && (
-				<div className="mt-6 overflow-hidden text-center transition-all duration-500 animate-slide-up bg-slate-800/50 backdrop-blur-xl rounded-2xl border border-white/5" aria-live="polite" aria-atomic="true">
+				<div className="mt-4 overflow-hidden text-center transition-all duration-500 animate-slide-up bg-slate-800/50 backdrop-blur-xl rounded-2xl border border-white/5 sm:mt-6" aria-live="polite" aria-atomic="true">
 					<div className="grid gap-6 px-5 py-6 sm:px-6">
 						<div className="space-y-1.5">
 							<h2 className="text-xs font-medium tracking-wide text-slate-400 uppercase truncate">{currentTimezone && getTimezoneString(currentTimezone)}</h2>

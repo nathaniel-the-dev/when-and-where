@@ -188,7 +188,7 @@ export const Map = () => {
 					</div>
 				</div>
 			) : (
-				<div className="relative w-full h-full min-h-[20rem]">
+				<div className="relative w-full h-full min-h-[16rem] sm:min-h-[20rem]">
 					{isLoading && (
 						<div className="absolute top-3 left-3 z-10 inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-white/90 bg-slate-900/80 backdrop-blur-sm rounded-lg border border-white/10 shadow-lg animate-fade-in" role="status" aria-label="Loading timezone data">
 							<span className="inline-block w-2 h-2 bg-indigo-400 rounded-full animate-pulse-soft" />

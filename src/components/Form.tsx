@@ -122,7 +122,7 @@ export const Form = () => {
 	}
 
 	return (
-		<form className="max-w-3xl mx-auto my-6 mb-10 animate-fade-in" aria-label="Timezone selection">
+		<form className="max-w-3xl mx-auto my-4 mb-8 animate-fade-in sm:my-6 sm:mb-10" aria-label="Timezone selection">
 			<div className="flex flex-col items-center gap-3">
 				<div className="relative flex-1 w-full max-w-md">
 					<label className="inline-block mb-1.5 text-xs font-medium tracking-wide text-slate-400 uppercase" htmlFor="selectedTimezone">
