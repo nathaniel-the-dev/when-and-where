@@ -175,7 +175,7 @@ export const Map = () => {
 	}, [getTimezoneFromMap, onDragEnd, showCurrentMarker, store, toggleCurrentMarkerIndex]);
 
 	return (
-		<div className="[grid-area:map] overflow-hidden" role="application" aria-label="Interactive world map with timezone markers">
+		<div className="[grid-area:map]" role="application" aria-label="Interactive world map with timezone markers">
 			{error ? (
 				<div className="grid w-full h-full place-items-center bg-slate-900/80" role="alert">
 					<div className="max-w-xs p-6 text-center">

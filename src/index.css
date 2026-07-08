@@ -18,6 +18,15 @@
 	min-height: 100vh;
 }
 
+@media (max-width: 767px) {
+	.app-layout {
+		height: 100vh;
+		overflow-y: auto;
+		-webkit-overflow-scrolling: touch;
+		grid-template-rows: auto auto 1fr auto;
+	}
+}
+
 @media (min-width: 768px) {
 	.app-layout {
 		grid-template-areas:
