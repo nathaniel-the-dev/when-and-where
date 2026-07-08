@@ -1,28 +1,56 @@
-# When and Where - Timezone Converter
+# When & Where — Timezone Converter
 
-A convenient tool for converting between two different timezones, making it easy to compare times across different regions of the world.
+A real-time, dual-timezone converter with an interactive world map. Select any two timezones and see the current time, offset, and geographic location — all in one place.
+
+![Preview](https://img.shields.io/badge/status-active-brightgreen)
+![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-06B6D4?logo=tailwindcss)
+![Mapbox](https://img.shields.io/badge/Mapbox-GL-000000?logo=mapbox)
+
+---
 
 ## Features
 
-The app offers the following features:
+- **Live dual clocks** — Real-time clocks (with seconds) for two selected timezones, updating every second
+- **Smart search** — Search 400+ timezones by country, city, or abbreviation via an accessible, themed dropdown
+- **Interactive map** — Click anywhere on the world map to drop a pin; the timezone is identified automatically via reverse geocoding
+- **Drag-and-drop markers** — Reposition markers on the map to update timezone selections
+- **Timezone offset** — Instantly see how many hours ahead or behind one timezone is from the other
+- **Swap timezones** — One-click swap between primary and secondary selections
+- **Auto-detect** — Detect your current timezone from your browser with a single click
+- **Fully responsive** — Side-by-side layout on desktop, stacked on mobile
 
--   Select two timezones to compare and displays the current time in each selected timezone.
--   Search for timezones by country or timezone name.
--   Shows a map with the two selected locations marked with a pin.
+## Tech Stack
 
-## Installation
+| Layer | Technology |
+|-------|-----------|
+| Framework | React 18 |
+| Language | TypeScript (strict) |
+| State | Redux Toolkit |
+| Styling | Tailwind CSS 3 |
+| Time | moment-timezone + @vvo/tzdb |
+| Map | Mapbox GL JS v2 |
+| UI | react-select |
+| Build | Vite + SWC |
 
-To run the app locally, you will need to install the following dependencies:
+## Getting Started
 
 ```bash
 npm install
 cp .env.example .env
 ```
 
-## Contribution
+Add your [Mapbox public access token](https://account.mapbox.com/access-tokens/) to `.env`:
 
-To contribute to this project, feel free to open an issue or pull request. Thank you!
+```
+VITE_MAPBOX_API_KEY=pk.your_token_here
+```
+
+```bash
+npm run dev
+```
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT — see [LICENSE](LICENSE).

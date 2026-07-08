@@ -2,24 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-	.btn {
-		@apply py-2.5 px-5 text-sm font-medium inline-flex items-center gap-2 text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200;
-	}
-}
-
-.mapboxgl-popup {
-	@apply text-black;
-}
-
-.mapboxgl-popup .mapboxgl-popup-content {
-	@apply px-4 pt-4 overflow-hidden text-center rounded-lg;
-}
-.mapboxgl-popup .mapboxgl-popup-close-button {
-	@apply lg:opacity-0 px-1 py-0 text-sm text-red-500 transition duration-150;
-}
-.mapboxgl-popup:hover .mapboxgl-popup-close-button {
-	@apply opacity-100;
+*:focus-visible {
+	outline: 2px solid #818cf8;
+	outline-offset: 2px;
+	border-radius: 4px;
 }
 
 .app-layout {
@@ -29,7 +15,6 @@
 		'main'
 		'map'
 		'footer';
-
 	min-height: 100vh;
 }
 
@@ -50,9 +35,64 @@
 	}
 
 	.main-section::-webkit-scrollbar {
-		width: 0.5rem;
+		width: 0.35rem;
 	}
+
+	.main-section::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
 	.main-section::-webkit-scrollbar-thumb {
-		@apply bg-gray-800;
+		background: #334155;
+		border-radius: 9999px;
 	}
+}
+
+.mapboxgl-popup {
+	@apply text-slate-800;
+}
+
+.mapboxgl-popup .mapboxgl-popup-content {
+	@apply px-4 pt-3 pb-3 text-center rounded-xl shadow-xl border border-white/10;
+	background: rgba(255, 255, 255, 0.95);
+	backdrop-filter: blur(8px);
+}
+
+.mapboxgl-popup .mapboxgl-popup-close-button {
+	@apply px-1 py-0 text-sm text-red-400 transition-all duration-200 ease-in-out hover:text-red-600 hover:scale-110;
+}
+
+.mapboxgl-popup .mapboxgl-popup-tip {
+	border-top-color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.mapboxgl-ctrl-attrib {
+	@apply text-[10px] text-white/40;
+}
+
+.mapboxgl-ctrl-attrib a {
+	@apply text-white/50;
+}
+
+.mapboxgl-ctrl button {
+	@apply transition-all duration-200 ease-in-out hover:scale-105;
+}
+
+.mapboxgl-ctrl-group {
+	@apply rounded-xl overflow-hidden shadow-lg border border-white/10;
+	background: rgba(30, 41, 59, 0.8) !important;
+	backdrop-filter: blur(8px);
+}
+
+.mapboxgl-ctrl-group button {
+	@apply text-white/80 hover:text-white border-white/5;
+	background: transparent !important;
+}
+
+.mapboxgl-ctrl-group button + button {
+	@apply border-t border-white/10;
+}
+
+.mapboxgl-ctrl-group button:hover {
+	background: rgba(99, 102, 241, 0.2) !important;
 }

@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from 'moment-timezone';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { AppState } from '../store';
@@ -17,8 +17,8 @@ export function useTimezoneResults() {
 		// Setup timer
 		const interval = setInterval(() => {
 			// Get current time (formatted)
-			setFormattedTime(() => moment.tz(Date.now(), currentTimezone.name).format('hh:mm A'));
-			setFormattedTime2(() => moment.tz(Date.now(), alternateTimezone.name).format('hh:mm A'));
+			setFormattedTime(() => moment.tz(Date.now(), currentTimezone.name).format('hh:mm:ss A'));
+			setFormattedTime2(() => moment.tz(Date.now(), alternateTimezone.name).format('hh:mm:ss A'));
 		}, 1000);
 
 		// Get hours ahead

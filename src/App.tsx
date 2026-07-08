@@ -9,20 +9,17 @@ import store from './store';
 
 function App() {
 	return (
-		<>
-			<Provider store={store}>
-				<main className="app-layout text-white bg-gray-700">
-					<Header />
-					<Main>
-						<Form />
-						<Results />
-					</Main>
-					<Footer />
-
-					<Map />
-				</main>
-			</Provider>
-		</>
+		<Provider store={store}>
+			<div className="app-layout bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white">
+				<Header />
+				<Main>
+					<Form />
+					<Results />
+				</Main>
+				<Footer />
+				<Map />
+			</div>
+		</Provider>
 	);
 }
 
